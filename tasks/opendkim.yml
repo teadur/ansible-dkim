@@ -34,18 +34,12 @@
   notify:
    - restart opendkim
 
+- name: Chmodding /etc/opendkim
+  file: path=/etc/opendkim state=directory owner=opendkim group=opendkim recurse=yes
+
 - name: ensure signing key is present
-  stat: path=/etc/opendkim/keys/{{ dkim_selector }}.private get_md5=no
-  register: dkim_key
-
-- name: generate signing key
-  shell: opendkim-genkey -s {{ dkim_selector }} -d {{ dkim_domains[0] }} -D /etc/opendkim/keys
-  when: not dkim_key.stat.exists
-  notify:
-   - restart opendkim
-
-- name: ensure signing key owner
-  file: path=/etc/opendkim/keys/{{ dkim_selector }}.private owner=opendkim group=opendkim
+  file: path=/etc/opendkim/keys/{{ item.key }} owner=opendkim group=mail mode=0400
+  with_items: "{{ dkim_domains }}"
 
 - name: opendkim is running
   service: name=opendkim state=running enabled=yes
