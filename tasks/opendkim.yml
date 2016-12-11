@@ -34,12 +34,16 @@
   notify:
    - restart opendkim
 
-- name: Chmodding /etc/opendkim
-  file: path=/etc/opendkim state=directory owner=opendkim group=opendkim recurse=yes
-
 - name: ensure signing key is present
-  file: path=/etc/opendkim/keys/{{ item.key }} owner=opendkim group=mail mode=0400
+  file: path=/etc/opendkim/keys/{{ item.key }} owner=opendkim group=opendkim
   with_items: "{{ dkim_domains }}"
+  notify:
+  - restart opendkim
+
+- name: chown and chmod /etc/opendkim
+  file: path=/etc/opendkim state=directory owner=opendkim group=opendkim recurse=yes
+  notify:
+  - restart opendkim
 
 - name: opendkim is running
   service: name=opendkim state=running enabled=yes
