@@ -1,0 +1,23 @@
+# file: meta/main.yml
+
+galaxy_info:
+  author: "Amnay Mo"
+  description: A role to install and configure Postfix and OpenDKIM for multiple domains with multiple domain keys
+  license: MIT
+  min_ansible_version: 1.4
+  version: 1.0
+  platforms:
+    - name: Debian
+      versions:
+      - 7
+      - 8
+    - name: Ubuntu
+      versions:
+      - precise
+      - trusty
+  galaxy_tags:
+   - postfix
+   - dkim
+   - opendkim
+   - smtp
+dependencies: []
