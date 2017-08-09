@@ -25,6 +25,7 @@ Ansible role for opendkim with postfix configuration on Debian
 ```yaml
 ---
 admin_email: 'admin@domain.com'
+postfix_myhostname: 'mailing.domain.com' # ehlo hostname
 dkim_domains: 
   - domain: 'domain1.com'
     selector: 'domain1'
