@@ -46,4 +46,4 @@
   - restart opendkim
 
 - name: opendkim is running
-  service: name=opendkim state=running enabled=yes
+  service: name=opendkim state=started enabled=yes
